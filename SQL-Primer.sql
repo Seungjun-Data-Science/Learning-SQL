@@ -130,6 +130,26 @@ SELECT user_id, username FROM user_details WHERE last_name = 'miller'
 UNION
 SELECT user_id, username FROM user_details WHERE last_name = 'john'
 
+-- More complicated UNION Query
+
+WITH sales as (
+  SELECT 'sale' as type
+  FROM sale_transactions
+WHERE day >= '2017-09-01'),
+buys as (
+  SELECT 'buy' as type
+  FROM buy_transactions
+WHERE day >= '2017-09-01'),
+unioned as (
+  SELECT type
+  FROM buys
+  UNION ALL
+  SELECT type
+FROM sales) 
+SELECT type, count(1) as num_transactions
+FROM unioned
+GROUP BY type;
+
 -- Full Text Search
 -- Has to first designate a column to be a full text (Setting "last_name" column as full text)
 ALTER TABLE user_details ADD FULLTEXT(last_name)
@@ -199,3 +219,19 @@ RENAME TABLE customers TO users
 -- Similar to storing a portion of a dataframe into a global variable in objected oriented programming languages
 CREATE VIEW mostbids AS
 SELECT id, name, bids FROM items BY bids DESC LIMIT 10
+
+-- Window Functions (e.g. RANK, FIRST_VALUE, LAG)
+
+-- Imagine you have a table with some line items that report revenue along with the U.S state it came from. 
+-- Your task is to determine the percent of revenue each line item contributed to its state’s total revenue. 
+-- The window function is specified by the OVER clause. By summing revenue partitioned by state you get an aggregated value 
+-- for each state associated with each individual line item. This makes getting that percent contribution number you care about 
+-- a matter of simple division.
+
+WITH state_totals as (
+  SELECT state, revenue, 
+    SUM(revenue) OVER (PARTITION BY state) as state_revenue
+  FROM state_line_items)SELECT state, 
+  revenue/state_revenue as percent_of_state_revenue
+FROM state_totals;
+
