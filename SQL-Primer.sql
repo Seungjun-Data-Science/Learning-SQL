@@ -235,3 +235,4 @@ WITH state_totals as (
   revenue/state_revenue as percent_of_state_revenue
 FROM state_totals;
 
+-- WITH statements
