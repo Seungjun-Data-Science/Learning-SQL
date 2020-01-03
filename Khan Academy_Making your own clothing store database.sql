@@ -20,7 +20,7 @@ INSERT INTO store VALUES (9, "leather jacket", "MW", "leather", 18);
 INSERT INTO store VALUES (10, "Suit", "M", "polyester", 50);
 INSERT INTO store VALUES (11, "Winter Coat", "M", "Wool", 70);
 INSERT INTO store VALUES (12, "Winter Coat", "W", "Wool", 70);
-INSERT INTO store VALUES (13, "Slippers", "MW", "polyester",10);
+INSERT INTO store VALUES (13, "sandals", "MW", "polyester",10);
 INSERT INTO store VALUES (14, "Skirt", "W", "silk", 20);
 INSERT INTO store VALUES (15, "Sneakers", "MW", "polyester", 22);
 
